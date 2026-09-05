@@ -1,3 +1,9 @@
 import rolando.*
 describe "Erethia" {
-}
+    test "rolando mochila"{
+        rolando.llevarArtefacto(espada)
+        rolando.llevarArtefacto(libroHechizo)
+        rolando.llevarArtefacto(collar)
+        assert.equals([espada, libroHechizo], rolando.artefactos())
+    }
+} 
