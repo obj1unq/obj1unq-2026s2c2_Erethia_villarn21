@@ -4,13 +4,16 @@ object rolando {
  var hogar = castillo
  var ordenDePosesion = []
  var podeDePelea = 0
- var poderDeMochila = []
+ var poderBase = 0
  method poderDePelea(){
-   return podeDePelea + mochila.sum{artefacto => artefacto.poderDePelea(rolando)}
+   return poderBase + mochila.sum{artefacto => artefacto.poderDePelea()}
  }
+method poderBase(){
+   return poderBase 
+}
 
-method poderDePelea(_poderDePelea){
-   podeDePelea = _poderDePelea
+method poderBase(_poderBase){
+   poderBase = _poderBase
 }
 
  method capacidadMochila(_capacidadMochila){
@@ -54,12 +57,12 @@ object espada{
    var poderDePelea = 0
    var personaje = rolando
    var utilizado = false
-   method poderDePelea(_personaje){
+   method poderDePelea(){
       if(not utilizado){
-         return personaje.poderDePelea()
+         return personaje.poderBase()
           
       }else{
-         return personaje.poderDePelea() / 2
+         return personaje.poderBase() / 2
       }
    }
    method utilizar(){
@@ -76,11 +79,11 @@ object collar{
    var poderDePelea = 3
    var personaje = rolando
    var cantVecesUtilizado = 0
-   method poderDePelea(_personaje){
-      if(personaje.poderDePelea() > 6){
-         return poderDePelea +  (1 * cantVecesUtilizado)
+   method poderDePelea(){
+      if(personaje.poderBase() > 6){
+          return poderDePelea + cantVecesUtilizado
       }else{
-         return poderDePelea
+          return poderDePelea 
       }
    }
    method cantVecesUtilizado(cantidad) {
