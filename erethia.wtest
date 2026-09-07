@@ -1,9 +1,33 @@
 import rolando.*
 describe "Erethia" {
     test "rolando mochila"{
-        rolando.llevarArtefacto(espada)
-        rolando.llevarArtefacto(libroHechizo)
-        rolando.llevarArtefacto(collar)
+        rolando.encontrarArtefacto(espada)
+        rolando.encontrarArtefacto(libroHechizo)
+        rolando.encontrarArtefacto(collar)
         assert.equals([espada, libroHechizo], rolando.artefactos())
+    }
+    test "rolando hogar" {
+        rolando.encontrarArtefacto(espada)
+        rolando.encontrarArtefacto(libroHechizo)
+        rolando.llegarAHogar()
+        rolando.encontrarArtefacto(collar)
+        rolando.llegarAHogar()
+        assert.equals([espada, libroHechizo, collar], castillo.artefactos())
+    }
+    test "posesiones" {
+        rolando.encontrarArtefacto(espada)
+        rolando.encontrarArtefacto(collar)
+        rolando.llegarAHogar()
+        rolando.encontrarArtefacto(armadura)
+        assert.notThat(rolando.enPosesion(libroHechizo))
+    }
+    test "orden" {
+        rolando.encontrarArtefacto(espada)
+        rolando.encontrarArtefacto(libroHechizo)
+        rolando.encontrarArtefacto(collar)
+        rolando.llegarAHogar()
+        rolando.encontrarArtefacto(armadura)
+        rolando.encontrarArtefacto(collar)
+        assert.equals([espada, libroHechizo, collar, armadura, collar], rolando.ordenDePosesion())
     }
 } 
