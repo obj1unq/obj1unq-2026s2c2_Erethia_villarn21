@@ -15,11 +15,11 @@ object rolando {
       }
  }
 method hayArtefactoLetal(enemigo){
-    return mochila.any({artefacto => artefacto.poderDePelea() + self.poderBase() > enemigo.poderDePelea()})
+    return mochila.any({artefacto => artefacto.poderDePelea() > enemigo.poderDePelea()})
 }
 
 method elArtefactoLetalPara(enemigo){
-    return mochila.find({artefacto => artefacto.poderDePelea() + self.poderBase() > enemigo.poderDePelea()})
+    return mochila.find({artefacto => artefacto.poderDePelea() > enemigo.poderDePelea()})
 }
  method esPoderoso(){
    return self.enemigosAVencer() == enemigos
@@ -213,3 +213,22 @@ object armadura{
 
    }
 }
+
+/*
+Elegir un polimorfismo e indicar:
+
+a)¿Qué nombre le pondrías al tipo de los objetos polimórficos?
+b)¿Qué mensajes componen ese tipo?
+c) ¿Quiénes usan los mensajes polimórficos?
+
+a)artefacto 
+b)poderDePelea() y usarEnBatalla()
+c)rolando 
+
+
+Respecto de las colecciones definidas:
+
+1)¿Qué tipo de elementos contienen?
+2)¿Qué mensaje polimórfico (perteneciente al tipo mencionado) utilizaste dentro de un bloque?
+
+*/
