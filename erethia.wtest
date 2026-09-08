@@ -30,4 +30,53 @@ describe "Erethia" {
         rolando.encontrarArtefacto(collar)
         assert.equals([espada, libroHechizo, collar, armadura, collar], rolando.ordenDePosesion())
     }
+    test "batalla" {
+      rolando.poderBase(5)
+      rolando.capacidadMochila(3)
+      rolando.encontrarArtefacto(espada)
+      rolando.encontrarArtefacto(armadura)
+      rolando.encontrarArtefacto(collar)
+      assert.equals(19, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(18, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(21.5, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(24, rolando.poderDePelea())
+    }
+    test "collar" {
+      rolando.poderBase(5)
+      rolando.capacidadMochila(3)
+      rolando.encontrarArtefacto(espada)
+      rolando.encontrarArtefacto(armadura)
+      rolando.encontrarArtefacto(collar)
+      rolando.llegarAHogar()
+      rolando.encontrarArtefacto(libroHechizo)
+      assert.equals(9, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(12, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(14, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(8, rolando.poderDePelea())
+    }
+    test "enemigos" {
+      rolando.poderBase(5)
+      rolando.capacidadMochila(3)
+      rolando.encontrarArtefacto(espada)
+      rolando.encontrarArtefacto(armadura)
+      rolando.encontrarArtefacto(collar)
+      assert.equals([archibaldo, astra], rolando.enemigosAVencer())
+      assert.equals([palacioMarmol, torreMarfil], rolando.moradasAConquistar())
+    }
+    test "es poderoso" {
+      rolando.poderBase(5)
+      rolando.capacidadMochila(3)
+      rolando.encontrarArtefacto(espada)
+      rolando.encontrarArtefacto(armadura)
+      rolando.encontrarArtefacto(collar)
+      assert.equals(false, rolando.esPoderoso())
+      rolando.poderBase(10)
+      assert.equals(true, rolando.esPoderoso())
+    }
 } 
