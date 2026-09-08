@@ -231,4 +231,12 @@ Respecto de las colecciones definidas:
 1)¿Qué tipo de elementos contienen?
 2)¿Qué mensaje polimórfico (perteneciente al tipo mencionado) utilizaste dentro de un bloque?
 
+1)
+mochila         = artefacto 
+castillo        = artefacto
+ordenDePosesion = artefacto
+enemigos        = enemigo
+
+2)poderDePelea 
+???(preguntar)
 */
