@@ -66,8 +66,8 @@ describe "Erethia" {
       rolando.encontrarArtefacto(espada)
       rolando.encontrarArtefacto(armadura)
       rolando.encontrarArtefacto(collar)
-      assert.equals([archibaldo, astra], rolando.enemigosAVencer())
-      assert.equals([palacioMarmol, torreMarfil], rolando.moradasAConquistar())
+      assert.equals([archibaldo, astra], erethia.enemigosVencidos(rolando))
+      assert.equals([palacioMarmol, torreMarfil], erethia.moradasConquistadas(rolando))
     }
     test "es poderoso" {
       rolando.poderBase(5)
@@ -75,8 +75,17 @@ describe "Erethia" {
       rolando.encontrarArtefacto(espada)
       rolando.encontrarArtefacto(armadura)
       rolando.encontrarArtefacto(collar)
-      assert.equals(false, rolando.esPoderoso())
+      assert.equals(false, erethia.esPoderoso(rolando))
       rolando.poderBase(10)
-      assert.equals(true, rolando.esPoderoso())
+      assert.equals(true, erethia.esPoderoso(rolando))
+    }
+    test "arma letal" {
+      rolando.poderBase(15)
+      rolando.capacidadMochila(3)
+      rolando.encontrarArtefacto(espada)
+      rolando.encontrarArtefacto(armadura)
+      rolando.encontrarArtefacto(collar)
+      assert.that(rolando.artefactoEsLetalPara(espada, astra))
+      assert.throwsException({rolando.elArtefactoLetalPara(caterina)})
     }
 } 

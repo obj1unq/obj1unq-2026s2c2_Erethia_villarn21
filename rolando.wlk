@@ -1,56 +1,37 @@
 object rolando {
- var mochila = []
+ const mochila = #{}
  var capacidadMochila = 2
  var hogar = castillo
- var ordenDePosesion = []
- var podeDePelea = 0
+ const ordenDePosesion = []
  var poderBase = 5
- var enemigos = [caterina, archibaldo, astra]
- 
- method artefactoLetalPara(enemigo){
-      if(self.hayArtefactoLetal(enemigo)){
-         return self.elArtefactoLetalPara(enemigo)
-      }else{
-         return null
-      }
- }
-method hayArtefactoLetal(enemigo){
-    return mochila.any({artefacto => artefacto.poderDePelea() > enemigo.poderDePelea()})
-}
+ const tierra = erethia
 
 method elArtefactoLetalPara(enemigo){
-    return mochila.find({artefacto => artefacto.poderDePelea() > enemigo.poderDePelea()})
+    return mochila.find({artefacto => self.artefactoEsLetalPara(artefacto, enemigo) })
 }
- method esPoderoso(){
-   return self.enemigosAVencer() == enemigos
- }
- method enemigosAVencer(){
-   return enemigos.filter({enemigo => enemigo.poderDePelea() < self.poderDePelea()})
- }
- method moradasAConquistar(){
-   return self.enemigosAVencer().map({enemigo => enemigo.morada()})
- }
+method artefactoEsLetalPara(artefacto, enemigo){
+   return artefacto.poderDePelea(self) > enemigo.poderDePelea()
+}
  method pelearBatalla(){
    mochila.forEach({artefacto => artefacto.usarEnBatalla()})
    poderBase = poderBase + 1
  }
  method poderDePelea(){
-   return poderBase + mochila.sum({artefacto => artefacto.poderDePelea()})
+   return poderBase + mochila.sum({artefacto => artefacto.poderDePelea(rolando)})
  }
-method poderBase(){
-   return poderBase
-}
-
 method poderBase(_poderBase){
    poderBase = _poderBase
 }
+method poderBase(){
+ return poderBase
 
- method capacidadMochila(_capacidadMochila){
+} 
+method capacidadMochila(_capacidadMochila){
     capacidadMochila = _capacidadMochila
  }
  method llegarAHogar() {
    hogar.artefactos(mochila)
-   mochila = []
+   mochila.clear()
  }
  method artefactos(){
     return mochila
@@ -71,7 +52,24 @@ method ordenDePosesion() {
   return ordenDePosesion
 }
 }
-
+object erethia {
+  const enemigos = #{caterina, archibaldo, astra}
+  method enemigos(){
+   return enemigos
+  }
+  method enemigo(enemigo){
+   enemigos.add(enemigo)
+  }
+ method esPoderoso(personaje){
+   return enemigos.all({enemigo => enemigo.poderDePelea() < personaje.poderDePelea()})
+ }
+ method enemigosVencidos(personaje){
+   return enemigos.filter({enemigo => enemigo.poderDePelea() < personaje.poderDePelea()})
+ }
+ method moradasConquistadas(personaje){
+   return self.enemigosVencidos(personaje).map({enemigo => enemigo.morada()})
+ }
+}
 object caterina {
   var poderDePelea = 28
   var morada = fortalezaAcero
@@ -82,7 +80,6 @@ object caterina {
     return morada
   }
 }
-
 object archibaldo {
   var poderDePelea = 16
   var morada = palacioMarmol
@@ -93,7 +90,6 @@ object archibaldo {
     return morada
   }
 }
-
 object astra {
   var poderDePelea = 14
   var morada = torreMarfil
@@ -104,24 +100,16 @@ object astra {
     return morada
   }
 }
-
 object fortalezaAcero{
-
 }
-
-object palacioMarmol{
-   
+object palacioMarmol{  
 }
-
-object torreMarfil{
-   
+object torreMarfil{  
 }
-
 object castillo {
-  var artefactos = []
-  var poderArtefactos = 0
+  const artefactos = #{}
    method poderArtefactos(){
-      return artefactos.map({artefacto => artefacto.poderDePelea()})
+      return artefactos.map({artefacto => artefacto.poderDePelea(rolando)})
    }
 method artefactos(_artefactos){
    artefactos.addAll(_artefactos)
@@ -130,15 +118,12 @@ method artefactos(){
       return artefactos
 }
 }
-
 object espada{
-   var poderDePelea = 0
-   var personaje = rolando
    var utilizado = false
    method usarEnBatalla(){
       utilizado = true
    }
-   method poderDePelea(){
+   method poderDePelea(personaje){
       if(not utilizado){
          return personaje.poderBase()
           
@@ -147,11 +132,9 @@ object espada{
       }
    }
 }
-
 object libroHechizo{
-   var personaje = rolando
-   var hechizos = [bendicion, invisibilidad, invocacion]
-   method poderDePelea(){
+   const hechizos = [bendicion, invisibilidad, invocacion]
+   method poderDePelea(personaje){
       if(hechizos.isEmpty()){
          return 0
       }else{
@@ -164,49 +147,45 @@ object libroHechizo{
    method hechizos(){
       return hechizos
    }
+   method agregarHechizo(hechizo){
+      hechizos.add(hechizo)
+   }
+   method quitarHechizo(hechizo){
+      hechizos.remove(hechizo)
+   }
 }
 object bendicion{
-   method poderDePelea(){
+   method poderDePelea(personaje){
       return 4
    }
 }
 object invisibilidad{
-   var personaje = rolando
-   method poderDePelea(){
+   method poderDePelea(personaje){
       return personaje.poderBase()
    }
 }
 object invocacion{
-   var personaje = rolando
-   method poderDePelea(){
+   method poderDePelea(personaje){
       return castillo.poderArtefactos().max()
    }
 }
-
-
 object collar{
    var poderDePelea = 3
-   var personaje = rolando
    var cantVecesUtilizado = 0
    method usarEnBatalla(){
       cantVecesUtilizado = cantVecesUtilizado + 1
    }
-   method poderDePelea(){
+   method poderDePelea(personaje){
       if(personaje.poderBase() > 6){
           return poderDePelea + cantVecesUtilizado
       }else{
           return poderDePelea 
       }
    }
-   method cantVecesUtilizado(cantidad) {
-     cantVecesUtilizado = cantidad
-   }
 }
-
 object armadura{
    const poderDePelea = 6
-   var personaje = rolando
-   method poderDePelea(){
+   method poderDePelea(personaje){
       return poderDePelea
    }
    method usarEnBatalla(){
@@ -238,5 +217,4 @@ ordenDePosesion = artefacto
 enemigos        = enemigo
 
 2)poderDePelea 
-???(preguntar)
 */
