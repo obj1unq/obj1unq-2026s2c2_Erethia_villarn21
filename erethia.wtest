@@ -85,7 +85,7 @@ describe "Erethia" {
       rolando.encontrarArtefacto(espada)
       rolando.encontrarArtefacto(armadura)
       rolando.encontrarArtefacto(collar)
-      assert.that(rolando.artefactoEsLetalPara(espada, astra))
+      assert.that(rolando.esArtefactoEsLetalPara(espada, astra))
       assert.throwsException({rolando.elArtefactoLetalPara(caterina)})
     }
 } 

@@ -4,12 +4,11 @@ object rolando {
  var hogar = castillo
  const ordenDePosesion = []
  var poderBase = 5
- const tierra = erethia
 
 method elArtefactoLetalPara(enemigo){
-    return mochila.find({artefacto => self.artefactoEsLetalPara(artefacto, enemigo) })
+    return mochila.find({artefacto => self.esArtefactoEsLetalPara(artefacto, enemigo) })
 }
-method artefactoEsLetalPara(artefacto, enemigo){
+method esArtefactoEsLetalPara(artefacto, enemigo){
    return artefacto.poderDePelea(self) > enemigo.poderDePelea()
 }
  method pelearBatalla(){
@@ -17,14 +16,13 @@ method artefactoEsLetalPara(artefacto, enemigo){
    poderBase = poderBase + 1
  }
  method poderDePelea(){
-   return poderBase + mochila.sum({artefacto => artefacto.poderDePelea(rolando)})
+   return poderBase + mochila.sum({artefacto => artefacto.poderDePelea(self)})
  }
 method poderBase(_poderBase){
    poderBase = _poderBase
 }
 method poderBase(){
  return poderBase
-
 } 
 method capacidadMochila(_capacidadMochila){
     capacidadMochila = _capacidadMochila
