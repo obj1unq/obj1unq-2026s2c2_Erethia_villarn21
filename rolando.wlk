@@ -164,7 +164,11 @@ object invisibilidad{
 }
 object invocacion{
    method poderDePelea(personaje){
+      if(castillo.artefactos().isEmpty()){
+         return 0
+      }else{
       return castillo.poderArtefactos().max()
+   }
    }
 }
 object collar{
