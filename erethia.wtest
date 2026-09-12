@@ -1,3 +1,91 @@
 import rolando.*
 describe "Erethia" {
-}
+    test "rolando mochila"{
+        rolando.encontrarArtefacto(espada)
+        rolando.encontrarArtefacto(libroHechizo)
+        rolando.encontrarArtefacto(collar)
+        assert.equals([espada, libroHechizo], rolando.artefactos())
+    }
+    test "rolando hogar" {
+        rolando.encontrarArtefacto(espada)
+        rolando.encontrarArtefacto(libroHechizo)
+        rolando.llegarAHogar()
+        rolando.encontrarArtefacto(collar)
+        rolando.llegarAHogar()
+        assert.equals([espada, libroHechizo, collar], castillo.artefactos())
+    }
+    test "posesiones" {
+        rolando.encontrarArtefacto(espada)
+        rolando.encontrarArtefacto(collar)
+        rolando.llegarAHogar()
+        rolando.encontrarArtefacto(armadura)
+        assert.notThat(rolando.enPosesion(libroHechizo))
+    }
+    test "orden" {
+        rolando.encontrarArtefacto(espada)
+        rolando.encontrarArtefacto(libroHechizo)
+        rolando.encontrarArtefacto(collar)
+        rolando.llegarAHogar()
+        rolando.encontrarArtefacto(armadura)
+        rolando.encontrarArtefacto(collar)
+        assert.equals([espada, libroHechizo, collar, armadura, collar], rolando.ordenDePosesion())
+    }
+    test "batalla" {
+      rolando.poderBase(5)
+      rolando.capacidadMochila(3)
+      rolando.encontrarArtefacto(espada)
+      rolando.encontrarArtefacto(armadura)
+      rolando.encontrarArtefacto(collar)
+      assert.equals(19, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(18, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(21.5, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(24, rolando.poderDePelea())
+    }
+    test "collar" {
+      rolando.poderBase(5)
+      rolando.capacidadMochila(3)
+      rolando.encontrarArtefacto(espada)
+      rolando.encontrarArtefacto(armadura)
+      rolando.encontrarArtefacto(collar)
+      rolando.llegarAHogar()
+      rolando.encontrarArtefacto(libroHechizo)
+      assert.equals(9, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(12, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(14, rolando.poderDePelea())
+      rolando.pelearBatalla()
+      assert.equals(8, rolando.poderDePelea())
+    }
+    test "enemigos" {
+      rolando.poderBase(5)
+      rolando.capacidadMochila(3)
+      rolando.encontrarArtefacto(espada)
+      rolando.encontrarArtefacto(armadura)
+      rolando.encontrarArtefacto(collar)
+      assert.equals([archibaldo, astra], erethia.enemigosVencidos(rolando))
+      assert.equals([palacioMarmol, torreMarfil], erethia.moradasConquistadas(rolando))
+    }
+    test "es poderoso" {
+      rolando.poderBase(5)
+      rolando.capacidadMochila(3)
+      rolando.encontrarArtefacto(espada)
+      rolando.encontrarArtefacto(armadura)
+      rolando.encontrarArtefacto(collar)
+      assert.equals(false, erethia.esPoderoso(rolando))
+      rolando.poderBase(10)
+      assert.equals(true, erethia.esPoderoso(rolando))
+    }
+    test "arma letal" {
+      rolando.poderBase(15)
+      rolando.capacidadMochila(3)
+      rolando.encontrarArtefacto(espada)
+      rolando.encontrarArtefacto(armadura)
+      rolando.encontrarArtefacto(collar)
+      assert.that(rolando.esArtefactoEsLetalPara(espada, astra))
+      assert.throwsException({rolando.elArtefactoLetalPara(caterina)})
+    }
+} 
